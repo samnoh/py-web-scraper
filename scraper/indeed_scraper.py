@@ -1,6 +1,6 @@
-from constants import LIMIT, INDEED_JOBLIST_URL, INDEED_APPLY_URL
-from webscaper.page import Page
-from helpers import convert_str_into_int
+from bs.page import Page
+from .constants import LIMIT, INDEED_JOBLIST_URL, INDEED_APPLY_URL
+from .helpers import convert_str_into_int
 
 
 class IndeedScraper:

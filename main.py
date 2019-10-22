@@ -1,3 +1,3 @@
-from indeed_scraper import IndeedScraper
+from scraper.indeed_scraper import IndeedScraper
 
 print(IndeedScraper.create())
