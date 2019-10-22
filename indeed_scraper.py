@@ -1,6 +1,6 @@
 from constants import INDEED_URL, LIMIT
 from webscaper.page import Page
-from helpers import list_convert_into_int
+from helpers import convert_str_into_int
 
 
 class IndeedScraper:
@@ -15,7 +15,7 @@ class IndeedScraper:
             {"find_all": ["a"]},
             {"get_each_value": ["string"]},
         ]
-        last_page = max(list_convert_into_int(self.get_indeed_page(runs)))
+        last_page = max(convert_str_into_int(self.get_indeed_page(runs)))
 
         offset_list = []
         for page in range(last_page):
@@ -40,7 +40,6 @@ class IndeedScraper:
                     company = company.string
                 company = company.strip()
                 jobs.append(f"{title} - {company}")
-                print(title, company)
             except Exception:
                 pass
 
