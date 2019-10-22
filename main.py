@@ -1,4 +1,11 @@
-import requests
+from constants import INDEED_URL
+from webscaper.Page import Page
 
-indeed_result = requests.get("https://www.indeed.com/jobs?q=python&limit=50")
-print(indeed_result.text)
+runs = [
+    {"find": ["div", {"class": "pagination"}]},
+    {"find_all": ["a"]},
+    {"get_each_text": ["span"]},
+]
+page = Page.build(INDEED_URL, runs)
+
+print(page.get_result()[:-1])
