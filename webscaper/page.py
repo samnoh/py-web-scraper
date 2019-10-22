@@ -5,8 +5,6 @@ from .request import Request
 class Page:
     """ Page Definition """
 
-    _page = ""
-
     def __init__(self, url):
         request_result = Request(url).get()
         self._page = BeautifulSoup(request_result, "html.parser")

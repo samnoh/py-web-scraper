@@ -29,21 +29,21 @@ class IndeedScraper:
         jobs = []
         runs = [{"find_all": ["div", {"class": "jobsearch-SerpJobCard"}]}]
 
-        for offset in self.offset_list:
-            results = self.get_indeed_page(runs, f"&start={offset}")
+        # for offset in self.offset_list:
+        results = self.get_indeed_page(runs, f"&start={0}")
 
-            for result in results:
-                try:
-                    title = result.find("div", {"class": "title"}).find("a")["title"]
-                    company = result.find("span", {"class": "company"})
-                    company_anchor = company.find("a")
-                    if company_anchor is not None:
-                        company = company_anchor.string.strip()
-                    else:
-                        company = company.string.strip()
-                    jobs.append(f"{title} - {company}")
-                    print(title, company)
-                except Exception:
-                    pass
+        for result in results:
+            try:
+                title = result.find("div", {"class": "title"}).find("a")["title"]
+                company = result.find("span", {"class": "company"})
+                company_anchor = company.find("a")
+                if company_anchor is not None:
+                    company = company_anchor.string.strip()
+                else:
+                    company = company.string.strip()
+                jobs.append(f"{title} - {company}")
+                print(title, company)
+            except Exception:
+                pass
 
         return jobs
