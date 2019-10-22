@@ -8,7 +8,6 @@ class Page:
     def __init__(self, url):
         request_result = Request(url).get()
         self._page = BeautifulSoup(request_result, "html.parser")
-        self._init_html = BeautifulSoup(request_result, "html.parser")
 
     @classmethod
     def create(cls, url, runs, params=""):
@@ -51,7 +50,3 @@ class Page:
             if data is not None:
                 result.append(data)
         self.set_page(result)
-
-    def get_init_html(self):
-        self.set_page(self._init_html)
-        return self.get_page()

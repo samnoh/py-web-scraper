@@ -8,4 +8,3 @@ def convert_str_into_int(data):
         except Exception:
             pass
     return result
-
