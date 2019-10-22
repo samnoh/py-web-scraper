@@ -1,4 +1,4 @@
-from indeed_scraper import get_indeed_pages, extract_indeed_jobs
+from indeed_scraper import IndeedScraper
 
-max_num = get_indeed_pages()
-extract_indeed_jobs(max_num)
+indeed = IndeedScraper()
+print(indeed.get_indeed_jobs())

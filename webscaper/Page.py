@@ -11,13 +11,13 @@ class Page:
         request_result = Request(url).get()
         self._page = BeautifulSoup(request_result, "html.parser")
 
-    @staticmethod
-    def create(url, runs, params=""):
-        page = Page(url + str(params))
+    @classmethod
+    def create(cls, url, runs, params=""):
+        page = cls(url + str(params))
         for run in runs:
-            for key, value in run.items():
-                getattr(page, key)(*value)
-        return page
+            key = next(iter(run))
+            getattr(page, key)(*run[key])
+        return page.get_page()
 
     def get_page(self):
         return self._page
@@ -28,11 +28,27 @@ class Page:
     def find(self, tag, attrs={}):
         self.set_page(self._page.find(tag, attrs))
 
-    def find_all(self, tag):
-        self.set_page(self._page.find_all(tag))
+    def find_all(self, tag, attrs={}):
+        self.set_page(self._page.find_all(tag, attrs))
 
-    def get_each_text(self):
+    def get_each_value(self, option="string"):
         result = []
         for r in self._page:
-            result.append(r.string)
+            data = getattr(r, option)
+            if data is not None:
+                result.append(data)
+        self.set_page(result)
+
+    def get_each_attr(self, attr):
+        result = []
+        for r in self._page:
+            result.append(r[attr])
+        self.set_page(result)
+
+    def get_each_find(self, tag, attrs={}):
+        result = []
+        for r in self._page:
+            data = r.find(tag, attrs)
+            if data is not None:
+                result.append(data)
         self.set_page(result)
