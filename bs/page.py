@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from .request import Request
+import inspect
 
 
 class Page:
@@ -33,7 +34,9 @@ class Page:
         result = []
         for r in self._page:
             data = getattr(r, option)
-            if data is not None:
+            if inspect.ismethod(data):
+                result.append(data())
+            elif data is not None:
                 result.append(data)
         self.set_page(result)
 

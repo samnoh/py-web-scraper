@@ -1,33 +1,17 @@
-from bs.page import Page
+from .scraper import Scraper
 from .constants import LIMIT, INDEED_JOBLIST_URL, INDEED_APPLY_URL
-from .helpers import convert_str_into_int
 
 
-class IndeedScraper:
+class IndeedScraper(Scraper):
     """ IndeedScrapper Definition """
 
-    jobs = []
-
-    @classmethod
-    def create(cls):
-        return cls().get_indeed_jobs()
-
-    def get_indeed_page(self, runs, params=""):
-        return Page.create(url=INDEED_JOBLIST_URL, runs=runs, params=params)
-
-    def get_offset_list(self):
+    def __init__(self):
         runs = [
             {"find": ["div", {"class": "pagination"}]},
             {"find_all": ["a"]},
             {"get_each_value": ["string"]},
         ]
-        last_page = max(convert_str_into_int(self.get_indeed_page(runs)))
-
-        offset_list = []
-        for page in range(last_page):
-            offset_list.append(page * LIMIT)
-
-        return offset_list
+        super().__init__(INDEED_JOBLIST_URL, runs, LIMIT)
 
     def _extract_job(self, html):
         title = html.find("div", {"class": "title"}).find("a")["title"]
@@ -49,13 +33,13 @@ class IndeedScraper:
             "location": location,
         }
 
-    def get_indeed_jobs(self):
+    def get_jobs(self):
         runs = [{"find_all": ["div", {"class": "jobsearch-SerpJobCard"}]}]
 
-        offsets = self.get_offset_list()
+        offsets = self.offset_list
         for offset in offsets:
             print(f"Scraping page {offsets.index(offset) + 1}...")
-            results = self.get_indeed_page(runs, f"&start={offset}")
+            results = self.get_page(runs, f"&start={offset}")
             for result in results:
                 try:
                     self.jobs.append(self._extract_job(result))
