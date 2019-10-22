@@ -1,3 +1,4 @@
+import inspect
 import requests
 
 
@@ -9,7 +10,7 @@ class Request:
 
     def get_data(self, option="text"):
         result = getattr(self._data, option)
-        if result == "function":
+        if inspect.isfunction(result):
             return result()
         return result
 

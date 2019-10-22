@@ -1,6 +1,6 @@
+import inspect
 from bs4 import BeautifulSoup
 from .request import Request
-import inspect
 
 
 class Page:
