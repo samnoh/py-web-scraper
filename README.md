@@ -10,6 +10,4 @@
 
 -   'javascript' jobs on Seek (NZ)
 
-<kbd>
-    <img src="img/result_example.png" width="100%">
-</kdb>
+<img src="img/result_example.png" width="100%">
