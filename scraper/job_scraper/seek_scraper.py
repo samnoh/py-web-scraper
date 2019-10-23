@@ -11,10 +11,7 @@ class SeekScraper(JobScraper):
             {"find": ["p", {"class": "_1eeNbu7"}]},
             {"get_each_value": ["string"]},
         ]
-        super().__init__(
-            SEEK_JOBLIST_URL, job_runs, offset_runs, offset_params="?page="
-        )
-        # self.offset_list = [1, 2, 3, 4, 5, 6, 7]
+        super().__init__(SEEK_JOBLIST_URL, job_runs, offset_runs, "?page=")
 
     def _extract_job(self, html):
         title = html["aria-label"]
