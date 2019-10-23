@@ -3,6 +3,8 @@ from .helpers import convert_str_into_int
 
 
 class Scraper:
+    """ Scraper Definition """
+
     jobs = []
     offset_list = []
 

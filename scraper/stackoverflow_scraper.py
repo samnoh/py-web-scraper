@@ -1,5 +1,5 @@
 from .scraper import Scraper
-from .constants import SO_JOBLIST_URL
+from .constants import SO_JOBLIST_URL, SO_APPLY_URL
 
 
 class StackoverflowScraper(Scraper):
@@ -14,7 +14,18 @@ class StackoverflowScraper(Scraper):
         super().__init__(SO_JOBLIST_URL, runs)
 
     def _extract_job(self, html):
-        return html["data-jobid"]
+        title = html.find("div", {"class": "-title"}).find("h2").find("a")["title"]
+        company, location = html.find("div", {"class": "-company"}).find_all(
+            "span", recursive=False
+        )
+        job_id = html["data-jobid"]
+
+        return {
+            "link": f"{SO_APPLY_URL}{job_id}",
+            "title": title,
+            "company": company.get_text(strip=True),
+            "location": location.get_text(strip=True).strip("-").lstrip(),
+        }
 
     def get_jobs(self):
         runs = [{"find_all": ["div", {"class": "-job"}]}]
@@ -27,6 +38,5 @@ class StackoverflowScraper(Scraper):
                 try:
                     self.jobs.append(self._extract_job(result))
                 except Exception:
-                    pass
-
+                    print(Exception)
         return self.jobs
