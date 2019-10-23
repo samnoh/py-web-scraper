@@ -36,7 +36,6 @@ class JobScraper:
         if not offset_runs:
             self.offset_list.append(0)
             return
-
         last_page = max(convert_str_into_int(self.get_page(offset_runs)))
         for page in range(last_page):
             self.offset_list.append(page * limit)
@@ -46,6 +45,7 @@ class JobScraper:
         for offset in offsets:
             print(f"Scraping {self} page {offsets.index(offset) + 1}...")
             results = self.get_page(self.job_runs, f"{self.offset_params}{offset}")
+
             for result in results:
                 try:
                     self.jobs.append(self._extract_job(result))
