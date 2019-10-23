@@ -51,4 +51,5 @@ class JobScraper:
                     self.jobs.append(self._extract_job(result))
                 except Exception:
                     pass
-            return self.jobs
+
+        return self.jobs
