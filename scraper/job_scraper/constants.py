@@ -1,4 +1,4 @@
-KEYWORD = "python"
+KEYWORD = "javascript"
 LIMIT = 50
 INDEED = "indeed"
 INDEED_JOBLIST_URL = f"https://www.indeed.com/jobs?q={KEYWORD}&limit={LIMIT}"
