@@ -1,6 +1,6 @@
-from .indeed_scraper import IndeedScraper
-from .stackoverflow_scraper import StackoverflowScraper
-from .constants import INDEED, SO
+from .job_scraper.indeed_scraper import IndeedScraper
+from .job_scraper.stackoverflow_scraper import StackoverflowScraper
+from .job_scraper.constants import INDEED, SO
 
 
 class Scraper:

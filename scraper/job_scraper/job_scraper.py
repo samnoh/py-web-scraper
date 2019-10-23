@@ -1,6 +1,6 @@
 from bs.page import Page
-from .helpers import convert_str_into_int
-from .output import Output
+from helpers import convert_str_into_int
+from output.output import Output
 
 CONSOLE = "console"
 CSV = "csv"
@@ -51,4 +51,4 @@ class JobScraper:
                     self.jobs.append(self._extract_job(result))
                 except Exception:
                     pass
-        return self.jobs
+            return self.jobs
