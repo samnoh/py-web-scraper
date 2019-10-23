@@ -1,17 +1,20 @@
-from .scraper import Scraper
-from .constants import LIMIT, INDEED_JOBLIST_URL, INDEED_APPLY_URL
+from .job_scraper import JobScraper
+from .constants import LIMIT, INDEED, INDEED_JOBLIST_URL, INDEED_APPLY_URL
 
 
-class IndeedScraper(Scraper):
+class IndeedScraper(JobScraper):
     """ IndeedScrapper Definition """
 
     def __init__(self):
-        runs = [
+        job_runs = [{"find_all": ["div", {"class": "jobsearch-SerpJobCard"}]}]
+        offset_runs = [
             {"find": ["div", {"class": "pagination"}]},
             {"find_all": ["a"]},
             {"get_each_value": ["string"]},
         ]
-        super().__init__(INDEED_JOBLIST_URL, runs, LIMIT)
+        super().__init__(
+            INDEED, INDEED_JOBLIST_URL, job_runs, offset_runs, "&start=", LIMIT
+        )
 
     def _extract_job(self, html):
         title = html.find("div", {"class": "title"}).find("a")["title"]
@@ -27,23 +30,8 @@ class IndeedScraper(Scraper):
         job_id = html["data-jk"]
 
         return {
-            "link": f"{INDEED_APPLY_URL}{job_id}",
             "title": title,
-            "company": company.strip(),
+            "company": company,
             "location": location,
+            "link": f"{INDEED_APPLY_URL}{job_id}",
         }
-
-    def get_jobs(self):
-        runs = [{"find_all": ["div", {"class": "jobsearch-SerpJobCard"}]}]
-
-        offsets = self.offset_list
-        for offset in offsets:
-            print(f"Scraping page {offsets.index(offset) + 1}...")
-            results = self.get_page(runs, f"&start={offset}")
-            for result in results:
-                try:
-                    self.jobs.append(self._extract_job(result))
-                except Exception:
-                    pass
-
-        return self.jobs

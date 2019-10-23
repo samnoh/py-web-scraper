@@ -1,5 +1,4 @@
-from scraper.indeed_scraper import IndeedScraper
-from scraper.stackoverflow_scraper import StackoverflowScraper
+from scraper.scraper import Scraper
 
-# print(IndeedScraper.create())
-print(StackoverflowScraper.create())
+Scraper.run_job_scraper("indeed", "csv")
+Scraper.run_job_scraper("stackoverflow", "csv")
