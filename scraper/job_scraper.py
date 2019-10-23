@@ -12,10 +12,7 @@ class JobScraper:
     jobs = []
     offset_list = []
 
-    def __init__(
-        self, name, url, job_runs, offset_runs=None, offset_params="", limit=1
-    ):
-        self.name = name
+    def __init__(self, url, job_runs, offset_runs=None, offset_params="", limit=1):
         self.url = url
         self.job_runs = job_runs
         self.offset_params = offset_params
@@ -28,9 +25,7 @@ class JobScraper:
         if option == CONSOLE:
             Output.console_output(jobs)
         elif option == CSV:
-            Output.csv_output(
-                my_class.name, jobs, ["Title", "Company", "Location", "Link"]
-            )
+            Output.csv_output(my_class, jobs, ["Title", "Company", "Location", "Link"])
         else:
             return jobs
 
@@ -49,7 +44,7 @@ class JobScraper:
     def get_jobs(self):
         offsets = self.offset_list
         for offset in offsets:
-            print(f"Scraping {self.name} page {offsets.index(offset) + 1}...")
+            print(f"Scraping {self} page {offsets.index(offset) + 1}...")
             results = self.get_page(self.job_runs, f"{self.offset_params}{offset}")
             for result in results:
                 try:

@@ -12,9 +12,7 @@ class IndeedScraper(JobScraper):
             {"find_all": ["a"]},
             {"get_each_value": ["string"]},
         ]
-        super().__init__(
-            INDEED, INDEED_JOBLIST_URL, job_runs, offset_runs, "&start=", LIMIT
-        )
+        super().__init__(INDEED_JOBLIST_URL, job_runs, offset_runs, "&start=", LIMIT)
 
     def _extract_job(self, html):
         title = html.find("div", {"class": "title"}).find("a")["title"]
@@ -35,3 +33,6 @@ class IndeedScraper(JobScraper):
             "location": location,
             "link": f"{INDEED_APPLY_URL}{job_id}",
         }
+
+    def __str__(self):
+        return INDEED
