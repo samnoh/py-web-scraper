@@ -5,7 +5,8 @@ from .constants import SO, SO_JOBLIST_URL, SO_APPLY_URL
 class StackoverflowScraper(JobScraper):
     """ StackoverflowScraper Definition"""
 
-    def __init__(self):
+    def __init__(self, keyword):
+        self.keyword = keyword
         job_runs = [{"find_all": ["div", {"class": "-job"}]}]
         offset_runs = [
             {"find": ["div", {"class", "pagination"}]},

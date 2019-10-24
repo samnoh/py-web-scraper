@@ -19,18 +19,18 @@ class JobScraper:
         self.get_offset_list(offset_runs, limit)
 
     @classmethod
-    def create(cls, option=None):
-        my_class = cls()
+    def create(cls, keyword, option=None):
+        my_class = cls(keyword)
         jobs = my_class.get_jobs()
-        if option == CONSOLE:
-            Output.console_output(jobs)
-        elif option == CSV:
-            Output.csv_output(my_class, jobs, ["Title", "Company", "Location", "Link"])
+        if option:
+            getattr(Output, option + "_output")(
+                my_class, jobs, first_row=["Title", "Company", "Location", "Link"]
+            )
         else:
             return jobs
 
     def get_page(self, runs, params=""):
-        return Page.create(url=self.url, runs=runs, params=params)
+        return Page.create(url=self.url + self.keyword, runs=runs, params=params)
 
     def get_offset_list(self, offset_runs, limit):
         if not offset_runs:

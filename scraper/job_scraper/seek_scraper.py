@@ -5,7 +5,8 @@ from .constants import SEEK, SEEK_JOBLIST_URL, SEEK_APPLY_URL
 class SeekScraper(JobScraper):
     """ SeekScraper Definition """
 
-    def __init__(self):
+    def __init__(self, keyword):
+        self.keyword = keyword + "-jobs"
         job_runs = [{"find_all": ["article"]}]
         offset_runs = [
             {"find": ["p", {"class": "_1eeNbu7"}]},

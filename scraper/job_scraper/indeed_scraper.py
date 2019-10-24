@@ -5,7 +5,8 @@ from .constants import LIMIT, INDEED, INDEED_JOBLIST_URL, INDEED_APPLY_URL
 class IndeedScraper(JobScraper):
     """ IndeedScrapper Definition """
 
-    def __init__(self):
+    def __init__(self, keyword):
+        self.keyword = keyword
         job_runs = [{"find_all": ["div", {"class": "jobsearch-SerpJobCard"}]}]
         offset_runs = [
             {"find": ["div", {"class": "pagination"}]},
