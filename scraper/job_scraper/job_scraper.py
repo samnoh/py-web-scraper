@@ -52,7 +52,7 @@ class JobScraper(metaclass=ABCMeta):
                     self.jobs.append(self._extract_job(result))
                 except Exception:
                     pass
-            return self.jobs
+        return self.jobs
 
     @abstractmethod
     def _extract_job(self):
