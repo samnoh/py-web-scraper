@@ -16,19 +16,13 @@ class Page:
         for run in runs:
             key = next(iter(run))
             getattr(page, key)(*run[key])
-        return page.get_page()
-
-    def get_page(self):
-        return self._page
-
-    def set_page(self, page):
-        self._page = page
+        return page._page
 
     def find(self, tag, attrs={}):
-        self.set_page(self._page.find(tag, attrs))
+        self._page = self._page.find(tag, attrs)
 
     def find_all(self, tag, attrs={}):
-        self.set_page(self._page.find_all(tag, attrs))
+        self._page = self._page.find_all(tag, attrs)
 
     def get_each_value(self, option="string"):
         result = []
@@ -38,13 +32,13 @@ class Page:
                 result.append(data())
             elif data is not None:
                 result.append(data)
-        self.set_page(result)
+        self._page = result
 
     def get_each_attr(self, attr):
         result = []
         for r in self._page:
             result.append(r[attr])
-        self.set_page(result)
+        self._page = result
 
     def get_each_find(self, tag, attrs={}):
         result = []
@@ -52,4 +46,4 @@ class Page:
             data = r.find(tag, attrs)
             if data is not None:
                 result.append(data)
-        self.set_page(result)
+        self._page = result

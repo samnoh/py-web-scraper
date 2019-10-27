@@ -13,6 +13,7 @@ class JobScraper(metaclass=ABCMeta):
     jobs = []
     offset_list = []
 
+    @abstractmethod
     def __init__(self, url, job_runs, offset_runs=None, offset_params="", limit=1):
         self.url = url
         self.job_runs = job_runs

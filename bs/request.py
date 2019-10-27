@@ -6,7 +6,7 @@ class Request:
     """ Request Definition """
 
     def __init__(self, url):
-        self.url = url
+        self._url = url
 
     def get_data(self, option="text"):
         result = getattr(self._data, option)
@@ -14,13 +14,10 @@ class Request:
             return result()
         return result
 
-    def set_data(self, data):
-        self._data = data
-
     def get(self, params="", option="text"):
-        self.set_data(requests.get(self.url + str(params)))
+        self._data = requests.get(self._url + str(params))
         return self.get_data(option)
 
     def post(self, data={}, option="json"):
-        self.set_data(requests.post(self.url, data=data))
+        self._data = requests.post(self._url, data=data)
         return self.get_data(option)
