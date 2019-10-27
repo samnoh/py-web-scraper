@@ -1,3 +1,4 @@
+from abc import ABCMeta, abstractmethod
 from bs.page import Page
 from helpers import convert_str_into_int
 from output.output import Output
@@ -6,7 +7,7 @@ CONSOLE = "console"
 CSV = "csv"
 
 
-class JobScraper:
+class JobScraper(metaclass=ABCMeta):
     """ JobScraper Definition """
 
     jobs = []
@@ -51,5 +52,12 @@ class JobScraper:
                     self.jobs.append(self._extract_job(result))
                 except Exception:
                     pass
+            return self.jobs
 
-        return self.jobs
+    @abstractmethod
+    def _extract_job(self):
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        pass
